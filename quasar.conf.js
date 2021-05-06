@@ -12,7 +12,7 @@ module.exports = function (/* ctx */) {
   return {
     supportTS: false,
     boot: [
-      
+      'set',
       'i18n',
       'axios',
     ],
