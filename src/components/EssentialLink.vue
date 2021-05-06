@@ -3,7 +3,7 @@
     clickable
     tag="a"
     target="_blank"
-    :href="link"
+    @click="$router.push(link)"
   >
     <q-item-section
       v-if="icon"
@@ -23,7 +23,6 @@
 
 <script>
 export default {
-  name: 'EssentialLink',
   props: {
     title: {
       type: String,
