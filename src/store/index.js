@@ -6,13 +6,19 @@ import albums from './module/albums'
 
 Vue.use(Vuex)
 
-export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
-    modules: {
-      layout,
-      albums
-    },
-  })
+// export default function (/* { ssrContext } */) {
+//   const Store = new Vuex.Store({
+//     modules: {
+//       layout,
+//       albums
+//     },
+//   })
 
-  return Store
-}
+//   return Store
+// }
+export default new Vuex.Store({
+  modules: {
+    layout,
+    albums
+  }
+})

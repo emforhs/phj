@@ -134,6 +134,9 @@ const getters = {
 }
 
 const actions = {
+  setLayout({commit, dispatch, state }, payload) {
+    commit('layoutSet',payload);
+  },
   addLayout({commit, dispatch, state }, payload) {
     let i = state.layout.length;
     payload.id = "item_"+ i;
@@ -149,10 +152,19 @@ const actions = {
   },
   delLayout({commit, dispatch, state }, payload) {
     commit('layoutDel',payload);
-  }
+  },
+  saveLayout({commit, dispatch, state }) {
+    if(window.localStorage.getItem('layout')){
+      window.localStorage.removeItem('layout');
+    }
+    window.localStorage.setItem('layout', JSON.stringify(state.layout));
+  },
 }
 
 const mutations = {
+  layoutSet (state, payload) {
+    state.layout = payload;
+  },
   layoutAdd (state, payload) {
     state.layout.push(payload);
     setTimeout(()=>{

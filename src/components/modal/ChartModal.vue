@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md q-gutter-sm right">
     <q-btn label="추가" color="primary" @click="open()"/>
-    <q-btn label="저장" color="primary" />
+    <q-btn label="저장" color="primary" @click="save()"/>
 
     <q-dialog v-model="layout" persistent>
       <q-layout view="hHh Lpr fff" container style="min-width: 700px; height: 500px" class="bg-white rounded-borders">
@@ -35,7 +35,7 @@
 
         <q-footer class="bg-primary">
           <q-toolbar>
-            <q-btn outline color="white" label="설정" @click="save()"/>
+            <q-btn outline color="white" label="적용" @click="set()"/>
             <q-btn outline color="white" label="취소" @click="close()"/>
           </q-toolbar>
         </q-footer>
@@ -195,7 +195,7 @@ export default {
   mounted(){
   },
   methods: {
-    ...mapActions('layout',['updateLayout', 'addLayout']),
+    ...mapActions('layout',['updateLayout', 'addLayout','saveLayout']),
     open(payload){
       if(payload){
         this.layout = true;
@@ -213,7 +213,7 @@ export default {
       this.$deleteChart("select_item");
       this.layout = false;
     },
-    save () {
+    set () {
       if(this.updateVal){
         this.updateVal.name = this.selectVal.name;
         this.updateVal.options = this.selectVal.options;
@@ -223,6 +223,9 @@ export default {
         this.addLayout(this.selectVal);
       }
       this.close();
+    },
+    save(){
+      this.saveLayout();
     },
     select(el){
       this.$updateChart("select_item",el.options);
