@@ -16,6 +16,7 @@
             :h="item.h"
             :i="item.i"
         >
+         <common-item />
         </grid-item>
         <chart-modal />
     </grid-layout>    
@@ -23,28 +24,26 @@
 
 <script>
 import { GridLayout, GridItem } from "vue-grid-layout";
+import ChartModal from "components/modal/ChartModal.vue";
+import CommonItem from "components/CommonItem.vue";
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
     components: {
         GridLayout,
         GridItem,
+        CommonItem,
+        ChartModal
     },
     data() {
         return {
             draggable: true,
             resizable: true,
-            index: 0,
-            layout:[
-              {"x":0,"y":0,"w":2,"h":10,"i":"0", static: false},
-              {"x":2,"y":0,"w":2,"h":10,"i":"1", static: false},
-              {"x":4,"y":0,"w":2,"h":10,"i":"2", static: false},
-              {"x":6,"y":0,"w":2,"h":10,"i":"3", static: false}
-            ]
+            index: 0
         }
     },
     computed :{
-       ...mapGetters('layout',['layout']),
+      ...mapGetters('layout',['layout']),
     },
     mounted (){
     },
@@ -80,7 +79,7 @@ export default {
     height: 20px;
     top: 0;
     left: 0;
-    background: #cce;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><circle cx='5' cy='5' r='5' fill='#999999'/></svg>") no-repeat;
     background-position: bottom right;
     padding: 0 8px 8px 0;
     background-repeat: no-repeat;
