@@ -12,8 +12,6 @@ export default function (/* { ssrContext } */) {
       layout,
       albums
     },
-
-    strict: process.env.DEBUGGING
   })
 
   return Store

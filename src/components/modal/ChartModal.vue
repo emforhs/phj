@@ -9,7 +9,7 @@
           <q-toolbar>
             <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
             <q-toolbar-title align="center">차트 설정</q-toolbar-title>
-            <q-btn flat v-close-popup round dense icon="close" />
+            <q-btn flat round dense icon="close" @click="close()"/>
           </q-toolbar>
         </q-header>
 
@@ -27,7 +27,7 @@
             target="_blank"
             v-for="(el,idx) in menu" :key="idx"
           >
-            <q-item-section @click="select(el.options)">
+            <q-item-section @click="select(el)">
               <q-item-label>{{el.name}}</q-item-label>
             </q-item-section>
           </q-item>
@@ -35,8 +35,8 @@
 
         <q-footer class="bg-primary">
           <q-toolbar>
-            <q-btn outline color="white" label="설정" />
-            <q-btn outline color="white" label="취소" />
+            <q-btn outline color="white" label="설정" @click="save()"/>
+            <q-btn outline color="white" label="취소" @click="close()"/>
           </q-toolbar>
         </q-footer>
 
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   data () {
     return {
@@ -185,6 +186,8 @@ export default {
           }
         },
       ],
+      updateVal:null,
+      selectVal: null
     }
   },
   computed: {
@@ -192,20 +195,38 @@ export default {
   mounted(){
   },
   methods: {
-    open(){
-      this.layout = true;
-      this.$nextTick(()=>{
-        this.$createChart("select_item",this.menu[1].options);
-      });
+    ...mapActions('layout',['updateLayout', 'addLayout']),
+    open(payload){
+      if(payload){
+        this.layout = true;
+        this.selectVal =  null;
+        this.updateVal = payload;
+        this.$createChart("select_item",payload.options);
+      }else{
+        this.layout = true;
+        this.selectVal =  this.menu[0];
+        this.updateVal = null;
+        this.$createChart("select_item",this.selectVal.options);
+      }
     },
-    add () {
-      
+    close (){
+      this.$deleteChart("select_item");
+      this.layout = false;
     },
     save () {
-
+      if(this.updateVal){
+        this.updateVal.name = this.selectVal.name;
+        this.updateVal.options = this.selectVal.options;
+        this.updateLayout(this.updateVal);
+        this.$updateChart(this.updateVal.id, this.updateVal.options);
+      }else{
+        this.addLayout(this.selectVal);
+      }
+      this.close();
     },
-    select(option){
-      this.$updateChart("select_item",option)
+    select(el){
+      this.$updateChart("select_item",el.options);
+      this.selectVal = el;
     }
   }
 }

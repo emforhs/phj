@@ -9,30 +9,49 @@
     >
         <grid-item v-for="item in layout"
             :key="item.i"
-            :static="item.static"
+            :isResizable="item.isResizable"
             :x="item.x"
             :y="item.y"
             :w="item.w"
             :h="item.h"
             :i="item.i"
         >
-         <common-item />
+            <div class="item-title">
+                <q-toolbar >
+                    <q-toolbar-title>
+                        {{item.name}}
+                    </q-toolbar-title>
+                     <q-btn-dropdown flat dense>
+                        <q-list>
+                            <q-item clickable v-close-popup @click="update(item)">
+                                <q-item-section>
+                                    <q-item-label>수정</q-item-label>
+                                </q-item-section>
+                            </q-item>
+                            <q-item clickable v-close-popup>
+                                <q-item-section>
+                                    <q-item-label>닫기</q-item-label>
+                                </q-item-section>
+                            </q-item>
+                        </q-list>
+                    </q-btn-dropdown>
+                </q-toolbar>
+            </div>
+            <div class="item-content" :id="item.id"></div>
         </grid-item>
-        <chart-modal />
+        <chart-modal ref="chart_modal"/>
     </grid-layout>    
 </template>
 
 <script>
 import { GridLayout, GridItem } from "vue-grid-layout";
 import ChartModal from "components/modal/ChartModal.vue";
-import CommonItem from "components/CommonItem.vue";
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
     components: {
         GridLayout,
         GridItem,
-        CommonItem,
         ChartModal
     },
     data() {
@@ -43,12 +62,18 @@ export default {
         }
     },
     computed :{
-      ...mapGetters('layout',['layout']),
+        ...mapGetters('layout',['layout']),
     },
     mounted (){
+        this.layout.forEach(el => {
+            this.$createChart(el.id, el.options);
+        });
     },
     methods: {
-        
+        ...mapActions('layout',['delLayout']),
+        update(payload){
+            this.$refs.chart_modal.open(payload);
+        }
     }
 }
 </script>
@@ -86,5 +111,19 @@ export default {
     background-origin: content-box;
     box-sizing: border-box;
     cursor: pointer;
-} 
+}
+.item-title {
+    border-radius: 8px 8px 0 0;
+    height: 40px;
+    .q-toolbar {
+        position: relative;
+        padding: 0 6px !important;
+        min-height: 40px  !important;
+        width: 100%;
+    }
+}
+.item-content{
+    border-radius: 0 0 8px 8px;
+    flex: 1;
+}
 </style>
