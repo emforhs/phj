@@ -6,7 +6,6 @@ import store from '../store/index';
 Vue.use(VueRouter)
 
 if(window.localStorage.getItem('layout')){
-  console.log(window.localStorage.getItem('layout'));
   store.dispatch('layout/setLayout',JSON.parse(window.localStorage.getItem('layout')));
 }
 

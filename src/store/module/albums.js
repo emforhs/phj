@@ -10,7 +10,7 @@ const getters = {
 const actions = {
   async getAlbums({commit, dispatch, state }, payload) {
       try {
-        const res = await axios.get('https://jsonplaceholder.typicode.com/albums')
+        const res = await axios.get('/albums')
         return res.data;
       } catch (error) {
           console.log('Request Error', error)
