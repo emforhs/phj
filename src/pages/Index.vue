@@ -1,14 +1,29 @@
 <template>
-  <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-full.svg"
-    >
+  <q-page class="flex">
+    <q-table
+      :data="data"
+      row-key="id"
+      style="width: 100%"
+    />
   </q-page>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
-  name: 'PageIndex'
+  name: 'PageIndex',
+  data () {
+    return {
+      data: [],
+    }
+  },
+  async mounted () {
+    let re = await this.getAlbums();
+    this.data = re;
+  },
+  methods: {
+    ...mapActions('albums',['getAlbums']),
+  }
 }
 </script>
