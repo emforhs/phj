@@ -16,7 +16,15 @@
         PHJ
       </q-toolbar-title>
 
-      <div></div>
+      <div>
+         <q-btn
+          flat
+          dense
+          round
+          label="로그아웃"
+          @click="logout()"
+        />
+      </div>
     </q-toolbar>
   </q-header>
 
@@ -70,6 +78,12 @@ export default {
       leftDrawerOpen: false,
       essentialLinks: linksData
     }
-  }
+  },
+   methods: {
+     logout(){
+       window.localStorage.removeItem('login');
+       this.$router.push("/Login");
+     }
+   }
 }
 </script>
