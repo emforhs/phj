@@ -49,7 +49,9 @@ module.exports = function (/* ctx */) {
       lang: 'en-us', // Quasar language pack
       config: {},
       importStrategy: 'auto',
-      plugins: []
+      plugins: [
+        'Notify'
+      ]
     },
     animations: [],
     ssr: {
