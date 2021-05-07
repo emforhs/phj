@@ -56,7 +56,7 @@ const linksData = [
   },
   {
     title: 'Dashboard',
-    caption: 'apexchart & gridster',
+    caption: 'apexchart & gridster(CRUD)',
     icon: 'chat',
     link: '/Dashboard'
   },
